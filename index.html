@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="ballApp">
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	<body ng-controller="canvasController">
+		<div class="container">
+			<div class="row center">
+				<h2 class="text-center">Game Details</h2>
+				<form>
+					<fieldset ng-disabled="!flag.hide">
+					  <div class="form-group col-md-6">
+					    <label for="height">Height of Canvas</label>
+					    <input type="number" class="form-control" id="height" placeholder="Height of Canvas" ng-model="form.height" required>
+					  </div>
+					  <div class="form-group col-md-6">
+					    <label for="width">Width of Canvas</label>
+					    <input type="number" class="form-control" id="width" placeholder="Width of Canvas" ng-model="form.width" required>
+					  </div>
+					  <div class="form-group col-md-6">
+					    <label for="radius">Radius of Ball</label>
+					    <input type="number" class="form-control" id="radius" placeholder="Radius of Ball" ng-model="form.radius" required>
+					  </div>
+					  <div class="form-group col-md-6">
+					    <label for="speed">Speed of Ball</label>
+					    <input type="number" class="form-control" id="speed" placeholder="Speed of Ball" ng-model="form.speed" required>
+					  </div>
+					   <div class="form-group col-md-6">
+					    <label for="angle">Angle</label>
+					    <input type="number" class="form-control" id="angle" placeholder="Angle" ng-model="form.angle" required>
+					  </div>
+					</fieldset>
+				  
+				  <div class="col-md-12">
+					  <input type="button" class="btn btn-default" value="Start" ng-click="start()" ng-disabled="!flag.pause || !form.height || !form.width || !form.radius || !form.speed || !form.angle">
+					  <input type="button" class="btn btn-default" value="Pause" ng-click="pause()" ng-disabled="flag.pause">
+					  <input type="button" class="btn btn-default" value="Stop" ng-click="stop()" ng-disabled="flag.stop">
+					  <input type="button" class="btn btn-default" value="Clear" ng-click="clear()">
+					 </div>
+				</form>
+			</div>
+
+			<div class="row canvas center" ng-hide="flag.hide">
+				<h2 class="text-center">Ball Game</h2>
+				<canvas id="ballCanvas" width="{{form.width}}" height="{{form.height}}"></canvas>
+			</div>
+		</div>
+		<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+		<script type="text/javascript" src="app.js"></script>
+		<!-- <script type="text/javascript" src="index.js"></script> -->
+	</body>
+</html>

@@ -1,0 +1,12 @@
+canvas { 
+	background: #eee; 
+}
+
+.center {
+	margin : auto;
+	width : 50%;
+}
+
+.heading {
+	text-align: center;
+}
