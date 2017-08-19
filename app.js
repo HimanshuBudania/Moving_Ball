@@ -1,3 +1,4 @@
+
 angular.module("ballApp", [])
 .controller("canvasController", function($scope, $interval){
 
@@ -23,6 +24,8 @@ angular.module("ballApp", [])
 		hide : true
 	};
 
+	$scope.Math = window.Math;
+
 	var stop;
 
 	$scope.start = function () {
@@ -44,20 +47,24 @@ angular.module("ballApp", [])
 			$interval.cancel(stop);
 			stop = undefined;
 			$scope.flag.pause = true;
+			//console.log($scope.x,$scope.y);
 		}
 	};
 
 	$scope.stop = function () {
 		if($scope.flag.pause || stop ){
 			$scope.init();
+			$scope.dx = 0;
+			$scope.dy = 0;
 			$scope.draw();
 			$interval.cancel(stop);
 			stop = undefined;
 			$scope.flag.start = false;
 			$scope.flag.pause = true;
 			$scope.flag.stop = true;
+			//$scope.init();
 		}
-		// $scope.init();
+		
 	};
 
 	$scope.clear = function (){
@@ -83,11 +90,11 @@ angular.module("ballApp", [])
 	    $scope.y += $scope.dy;
 
 	   if ($scope.x > $scope.form.width - $scope.ballRadius || $scope.x < 0 + $scope.ballRadius ) {
-	       $scope.angle = 180 - $scope.angle;
+	       $scope.angle = -(180 - $scope.angle);
 	       $scope.updatePos();
 	    }
-	    if ($scope.y > $scope.form.height - $scope.ballRadius || $scope.y < 0 + $scope.ballRadius) {
-	       $scope.angle = 360 - $scope.angle;
+	    else if ($scope.y > $scope.form.height - $scope.ballRadius || $scope.y < 0 + $scope.ballRadius) {
+	       $scope.angle = -(180 - $scope.angle);
 	       $scope.updatePos();
 	    }
 	    $scope.drawBall();
@@ -108,6 +115,10 @@ angular.module("ballApp", [])
 			stop : true,
 			hide : true
 		};
+	};
+
+	$scope.changeRadius = function(){
+		$scope.ballRadius = $scope.form.radius;
 	};
 
 });

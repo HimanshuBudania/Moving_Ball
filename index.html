@@ -8,32 +8,37 @@
 		<div class="container">
 			<div class="row center">
 				<h2 class="text-center">Game Details</h2>
-				<form>
-					<fieldset ng-disabled="!flag.hide">
+				<form name="bform">
+					<fieldset name="bfield">
 					  <div class="form-group col-md-6">
 					    <label for="height">Height of Canvas</label>
-					    <input type="number" class="form-control" id="height" placeholder="Height of Canvas" ng-model="form.height" required>
+					    <input type="number" name="height" class="form-control" id="height" placeholder="Height of Canvas" ng-model="form.height" ng-min="0" ng-required>
+					    <span class="error" ng-hide="bform.height.$valid">Height should be greater than 0</span>
 					  </div>
 					  <div class="form-group col-md-6">
 					    <label for="width">Width of Canvas</label>
-					    <input type="number" class="form-control" id="width" placeholder="Width of Canvas" ng-model="form.width" required>
+					    <input type="number" name="width" class="form-control" id="width" placeholder="Width of Canvas" ng-model="form.width" ng-min="0" ng-required>
+					    <span class="error" ng-hide="bform.width.$valid">Width should be greater than 0</span>
 					  </div>
 					  <div class="form-group col-md-6">
 					    <label for="radius">Radius of Ball</label>
-					    <input type="number" class="form-control" id="radius" placeholder="Radius of Ball" ng-model="form.radius" required>
+					    <input type="number" name="radius" class="form-control" id="radius" placeholder="Radius of Ball" ng-model="form.radius" ng-min="1" ng-max="Math.min(form.height, form.width)" ng-change="changeRadius()" ng-required ng-disabled="!form.height || !form.width">
+					    <span class="error" ng-hide="bform.radius.$valid">Radius should be >= 1 and <= min(height,width)</span>
 					  </div>
 					  <div class="form-group col-md-6">
 					    <label for="speed">Speed of Ball</label>
-					    <input type="number" class="form-control" id="speed" placeholder="Speed of Ball" ng-model="form.speed" required>
+					    <input type="number" name="speed" class="form-control" id="speed" placeholder="Speed of Ball" ng-model="form.speed" ng-min="0" ng-change="updatePos()" ng-required>
+					    <span class="error" ng-hide="bform.speed.$valid">Speed should be >= 0</span>
 					  </div>
 					   <div class="form-group col-md-6">
 					    <label for="angle">Angle</label>
-					    <input type="number" class="form-control" id="angle" placeholder="Angle" ng-model="form.angle" required>
+					    <input type="number" name="angle" class="form-control" id="angle" placeholder="Angle" ng-model="form.angle" ng-min="0" ng-max="360" ng-required>
+					    <span class="error" ng-hide="bform.angle.$valid">Angle should be >= 0 and <= 360</span>
 					  </div>
 					</fieldset>
 				  
-				  <div class="col-md-12">
-					  <input type="button" class="btn btn-default" value="Start" ng-click="start()" ng-disabled="!flag.pause || !form.height || !form.width || !form.radius || !form.speed || !form.angle">
+				  	<div class="col-md-12">
+					  <input type="button" class="btn btn-default" value="Start" ng-click="start()" ng-disabled=" !flag.pause || bform.$invalid || !(bform.height.$dirty && bform.width.$dirty && bform.speed.$dirty && bform.angle.$dirty && bform.radius.$dirty)" >
 					  <input type="button" class="btn btn-default" value="Pause" ng-click="pause()" ng-disabled="flag.pause">
 					  <input type="button" class="btn btn-default" value="Stop" ng-click="stop()" ng-disabled="flag.stop">
 					  <input type="button" class="btn btn-default" value="Clear" ng-click="clear()">
@@ -52,3 +57,5 @@
 		<!-- <script type="text/javascript" src="index.js"></script> -->
 	</body>
 </html>
+
+<!-- ng-disabled="!flag.pause || form.height >= 0|| form.width >= 0 || (form.radius  <= 0 || form.radius > Math.min(form.height, form.width))   || (form.speed < 0) || (form.angle < 0 || form.angle > 360) " -->
